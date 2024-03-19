@@ -75,8 +75,6 @@ model.
 - `beamModel_iridium_noisy.npy` is a noisy version of the ground truth beam model above. This represents the imperfect 
 beam model of the attacker. A normal distributed noise with a mean of 1 and a std of 0.1 was added. A noise of 1 is 
 equivalent to 6.8 km error in the footprint, which is equivalent to one second of satellite movement.
-- `beamModel_starlink_wide.npy` is the beam model for the Starlink satellites. It is build according to the 
-specifications from FCC documents, mentioned in section 6.4 in the paper.
 - `Generic_rec_processed_beam_model.py` loads the beam models and calculates the beam footprints.
 - `beamModel_coordinate_transformations.py` is a helping script for the `generic_rec_processed_beam_model.py` to handle 
 the coordinate transformations between the model internal coordinates and the ITRS coordinate system.
@@ -111,18 +109,16 @@ two types of result files:
 The graph...py files are used to evaluate the simulation results and to create the graphs in the paper. They load the
 data from the simulation_data folder and print them using the `plot_measurement_row.py` script.
 
-- `graph_simulation_attackerTypes.py`: Creates figure 10 (chapter 5.2)
-- `graph_simulation_attackerTypes_starlink.py`: creates figure 15 (chapter 6.4)
-- `graph_simulation_long_attackerTypes.py`: creates figure 12 (chapter 5.2)
-- `graph_simulation_paper_vs_published.py`: compares the performance of the published beam model 
+- `graph_simulation_attackerTypes.py`: Creates Figure 10 (chapter 5.2).
+- `graph_simulation_long_attackerTypes.py`: Creates Figure 12 (chapter 5.2).
+- `graph_simulation_paper_vs_published.py`: Compares the performance of the published beam model 
 `beam_model/beamModel_iridium.npy` with the original beam model that was used in the paper. We did not publish the 
 original model to avoid a simple tracking of Iridium devices in the real world, as mentioned in section 6.6 in the paper.
-- `graph_simulation_receiverDistances.py`: creates figure 13 (chapter 5.3)
-- `graph_simulation_receiverIntervals.py`: creates the graph for the textual evaluation of fragmented observations 
-(chapter 5.4)
-- `graph_simulation_victimMovement.py`: creates figure 14 (chapter 5.5)
-- `graph_simulation_vs_realWorld.py`: creates figure 11 (chapter 5.2)
-- `graph_lastMile.py`: creates figure 9 (chapter 4.6.2)
+- `graph_simulation_receiverDistances.py`: Creates Figure 13 (chapter 5.3).
+- `graph_simulation_receiverIntervals.py`: Creates the graph for the textual evaluation of fragmented observations 
+(chapter 5.4).
+- `graph_simulation_victimMovement.py`: Creates Figure 14 (chapter 5.5).
+- `graph_simulation_vs_realWorld.py`: Creates Figure 11 (chapter 5.2).
 
 ## Published Beam Model
 Comparison of the median RoI sizes [km²] of the paper vs the published beam model with attacker type 2
