@@ -58,7 +58,7 @@ def combine_rec_outputs_to_plot(x_axis: [float], x_label: str, figure_name: str,
 
 if __name__ == '__main__':
     fig_name = f"Areas (5th percentile, Q1, median, Q3, 95th percentile) of different rec-intervalls"
-    folder_name = "simulation_data/duration_and_type/"
+    folder_name = "simulation_data/intervall_sniffing/"
     x_values = ['400 km']
     x_text = f"inter-observer-distance"
 
@@ -67,8 +67,8 @@ if __name__ == '__main__':
         "weak noisy interval 120x30 (1/6rec)", "weak noisy interval 120x30 (6rec)",
     ]
     mapping = [
-        (0, 0, "400km_cont_3600sec_6_sun_eves_1VicType_realWorld_noisyPrediction.csv"),
-        (0, 2, "400km_120x_30sec_rec_600sec_pause_6_sun_eves_1VicType_realWorld_noisyPrediction.csv")
+        (0, 0, "400kmFibo_cont_3600sec_3eves_weakEvents_noisyPrediction.csv"),
+        (0, 2, "400kmFibo_120x_30sec_rec_600sec_pause_6eves_weakEvents_noisyPrediction.csv")
     ]
 
     combine_rec_outputs_to_plot(x_axis=x_values, x_label=x_text, figure_name=fig_name, output_folder=folder_name,

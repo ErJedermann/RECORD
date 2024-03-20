@@ -3,9 +3,9 @@ This repository is associated with the paper *RECORD: A RECeption-Only Region De
 (https://www.usenix.org/conference/usenixsecurity24/presentation/jedermann) by Eric Jedermann, Martin Strohmeier, 
 Vincent Lenders and Jens Schmitt. If you use this code, please cite our paper.
 
-The repo holds the code that is used in the paper for the simulations (generate observation events, calculate the region of interest 
-(RoI) based on the events and evaluate the RoI), the generated simulation data and the code for generating the 
-evaluation graphs.
+The repository holds the code that is used in the paper for the simulations (generate observation events, calculate the 
+region of interest (RoI) based on the events and evaluate the RoI), the generated simulation data and the code for generating 
+the evaluation graphs.
 
 ## Installation
 For installing the dependencies run `pip install -r requirements.txt`. After this the python scripts `graph...py` and
@@ -18,7 +18,7 @@ There are a number of parameters that are used to create the different scenarios
    - `output_folder`: Path to store the result files. The simulation stores the results of each independent iteration.
                       With the `graph...py` files, the resulting data are loaded afterward to generate the graphs.
    - `iterations_in`: Number of iterations to repeat each scenario.
-   - `inter_obs_distance`: The distances (in km) between neighbouring observers. In `simulations_attackerTypes_fibo.py`
+   - `inter_obs_distance`: The distances (in km) between neighboring observers. In `simulations_attackerTypes_fibo.py`
                            it is possible to specify a list of distances, so a series of independent scenarios with
                            different inter-observer distances will be simulated sequentially.
    - `durations_in`: The duration (in seconds) of the simulated observation time. The simulation will calculate the
@@ -32,11 +32,6 @@ There are a number of parameters that are used to create the different scenarios
 
 The `simulations_attackerTypes_fibo.py` script has some additional parameters:
    - `weak_events`: Specifies if weak or strong events are used for the RoI estimation (see section 5.1 in the paper).
-   - `starlink_simulations`: If True, the Starlink beam model, Starlink satellites and Starlink specific simulation
-                             parameters are loaded. (This option was introduced for convenience.)
-   - `iter_border`: Specifies how many observers need to have some observation events (checks only if observation events
-                    exist, not how many). This becomes important when the antenna beam gets small (Starlink) or the area
-                    covered by the observers gets large (many observers or large inter-observer-distances).
 
 The `simulations_victimMovement_fibo.py` script has some additional parameters:
    - `target_movement_radius`: The movement radius (in km), in which the target will wander around. In the paper, the
@@ -126,17 +121,18 @@ Comparison of the median RoI sizes [km²] of the paper vs the published beam mod
 
 | durations_in | paper  | published |
 |--------------|--------|-----------|
-| 1 min        | 307 k  | 460 k     |
-| 3 min        | 122 k  | 161 k     |
-| 10 min       | 25.3 k | 46.2 k    |
-| 30 min       | 3.48 k | 9.89 k    |
-| 1 h          | 700    | 1070      |
+| 1 min        | 307 k  | 468 k     |
+| 3 min        | 122 k  | 165 k     |
+| 10 min       | 25.3 k | 44 k      |
+| 30 min       | 3.48 k | 8.43 k    |
+| 1 h          | 700    | 848       |
 | 2 h          | 154    | 314       |
-| 4 h          | 92     | 208       |
+| 4 h          | 92     | 179       |
 | 8 h          | 60.8   | 52.9      |
 | 16 h         | 48.5   | 36        |
 
-This shows that the resulting RoI produced by the published beam model can be compared to the original beam model in the
-paper. They are not precisely matching the original model, which is expected since we added some noise to the data.
-Still it is partially comparable as the results are in the same order of magnitude and the RoIs are decreasing with
-increasing observation time.
+This are the median RoIs of attacker type 2, evaluated by the script `graph_simulation_paper_vs_published.py`.
+They show that the resulting RoI produced by the published beam model can be compared to the original beam model in the
+paper. They are not precisely matching the original model, which is expected since we added some noise to the published 
+beam model. Still it is partially comparable as the results differ only up to a factor of 2.5 and the RoIs are decreasing 
+with increasing observation time.

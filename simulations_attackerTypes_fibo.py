@@ -134,8 +134,8 @@ def __write_output_csv(filename: str, data_points: [float]):
 def __analyze_attackers_generic(distances: [int], sniffing_durations: [int], iterations: int, eve_amounts: int = 2,
                                 do_snf_intervals: bool = False, inter_int_time: [int] = None,
                                 int_rep: [int] = None, area_output_folder: str = None, weak_events: bool = False,
-                                noisy_prediction: bool = False, starlink: bool = False,
-                                use_point_estimator: bool = False, iteration_acceptance_border: int = 3) -> dict:
+                                noisy_prediction: bool = False, use_point_estimator: bool = False,
+                                iteration_acceptance_border: int = 1) -> dict:
     # a generic method that is able to execute all setups variations: varying distance, cont_time, interval_time
     # ensure that either the distances or the sniffing_durations is no vector
     if len(distances) > 1 and len(sniffing_durations) > 1:
@@ -166,21 +166,12 @@ def __analyze_attackers_generic(distances: [int], sniffing_durations: [int], ite
             print(f"ERROR: generic: given output-folder ({area_output_folder}) is not a folder!")
             exit(1)
     # now start the computation
-    if starlink:
-        # parameters for the starlink simulations
-        bm_file = "beam_model/beamModel_starlink_wide.npy"
-        noisy_bm_file = "beam_model/beamModel_starlink_wide.npy"
-        tle_file = "beam_model/starlink_TLE_2023_02_03.txt"
-        time_steps = 1  # sec
-        time_min = 1675382400  # start of 3rd Feb 2023
-        time_max = 1675468800  # end of 3rd Feb 2023
-    else:
-        bm_file = "beam_model/beamModel_iridium.npy"
-        noisy_bm_file = "beam_model/beamModel_iridium_noisy.npy"
-        tle_file = "beam_model/iridium_TLE_2022_02_14.tle"
-        time_steps = 1  # sec
-        time_min = 1644796800  # start of 14th Jan 2022
-        time_max = 1644883200  # end of 14th Jan 2022
+    bm_file = "beam_model/beamModel_iridium.npy"
+    noisy_bm_file = "beam_model/beamModel_iridium_noisy.npy"
+    tle_file = "beam_model/iridium_TLE_2022_02_14.tle"
+    time_steps = 1  # sec
+    time_min = 1644796800  # start of 14th Jan 2022
+    time_max = 1644883200  # end of 14th Jan 2022
     all_events_list = [RecordingEvents.GENERAL_RECEIVING, RecordingEvents.SUDDEN_RECEIVING, RecordingEvents.SUDDEN_NOT,
                        RecordingEvents.NOT_AFTER_HAND, RecordingEvents.CONTINUOUS_HAND]
     scenarioGen = UserPositionScenarioGenerator(bm_file, tle_file)
@@ -188,7 +179,7 @@ def __analyze_attackers_generic(distances: [int], sniffing_durations: [int], ite
         estimator = UserPositionEstimator(noisy_bm_file)
     else:
         estimator = UserPositionEstimator(bm_file)
-    print(f"DEBUG: generic: starting with {distances}km, {sniffing_durations}sec and {eve_amounts}eves.")
+    print(f"starting with {distances}km, {sniffing_durations}sec and {eve_amounts}eves.")
     for it_dist in range(len(distances)):
         temp_dist = distances[it_dist]
         for it_time in range(len(sniffing_durations)):
@@ -289,12 +280,12 @@ def __analyze_attackers_generic(distances: [int], sniffing_durations: [int], ite
                         if noisy_prediction:
                             filename = filename + f"_noisyPrediction"
                         output_path = area_output_folder + filename + ".csv"
-                        if not at_least_one_poly:
+                        if (not at_least_one_poly) or (not valid_s) or (not valid_c):
                             output_path = output_path + "_invalid"
                         __write_output_csv(filename=output_path, data_points=[area_s, area_c])
                     if use_point_estimator and area_output_folder is not None:
                         output_path = area_output_folder + filename + "_pointEstimator" + ".csv"
-                        if not at_least_one_poly:
+                        if (not at_least_one_poly) or (not valid_s) or (not valid_c):
                             output_path = output_path + "_invalid"
                         pE_dist_s = eval.evaluate_point_estimator(single_poly, eve_used_lolah, victim_loc)
                         pE_dist_c = eval.evaluate_point_estimator(combined_poly, eve_used_lolah, victim_loc)
@@ -307,29 +298,18 @@ if __name__ == '__main__':
     # This is tailored towards long computations: starting multiple instances with slightly different parameters.
     # The output-files are later combined to one graph.
     t1 = time.time()
-    output_folder = "simulation_data/duration_and_type"
+    output_folder = "simulation_data2/duration_and_type"
     iterations_in = 10
     inter_obs_distance = [100]  # distances between the observers
-    durations_in = [1 * 60]  # seconds;  durations_in = [1*60, 3*60, 10*60, 30*60, 60*60, 4*60*60]
+    durations_in = [60]  # seconds;  durations_in = [1*60, 3*60, 10*60, 30*60, 60*60, 4*60*60]
     number_eves = 3
     noisy_prediction = True
-    point_estimator = True
     weak_events = True
-    starlink_simulations = False
-    iter_border = 1
-
-    if starlink_simulations:
-        output_folder = "simulation_data/starlink"
-        iterations_in = 10
-        inter_obs_distance = [40]
-        durations_in = [30 * 60]  # 1*60, 3*60, 10*60, 30*60, 1*60*60, 2*60*60, 4*60*60
-        noisy_prediction = False
-        weak_events = True
+    point_estimator = False
 
     __analyze_attackers_generic(distances=inter_obs_distance, sniffing_durations=durations_in, iterations=iterations_in,
                                 eve_amounts=number_eves, do_snf_intervals=False,
                                 area_output_folder=output_folder, weak_events=weak_events,
-                                noisy_prediction=noisy_prediction, starlink=starlink_simulations,
-                                use_point_estimator=point_estimator, iteration_acceptance_border=iter_border)
+                                noisy_prediction=noisy_prediction, use_point_estimator=point_estimator)
     t2 = time.time()
     print(f"started at {t1}, until {t2}. took {t2 - t1} sec")

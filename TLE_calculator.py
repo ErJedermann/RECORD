@@ -12,7 +12,7 @@ import numpy as np
 # The purpose of this class is to load a set of satellites from TLEs and calculate their position at a given point in
 # time. The returned positions are in TEME frame.
 class TLE_calculator:
-    def __init__(self, tleFile: str, warnings: bool=True, verbose: bool=True):
+    def __init__(self, tleFile: str, warnings: bool=True, verbose: bool=False):
         self.tleFile = tleFile
         self.warnings = warnings
         self.verbose = verbose

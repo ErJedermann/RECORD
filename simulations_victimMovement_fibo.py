@@ -76,7 +76,7 @@ def __combine_scenarios(eve_scenarios_lst: [{}]) -> {}:
 def __generate_victim_movement(center: (float, float, float), circle_radius: float, duration: int, speed: float):
     # center [lon°, lat°, km], circle_radius [km], duration [sec], speed [km/sec]
     point_amount = 100
-    points_lst = User_Position_Setup.get_many_victims_setup(amounts=point_amount, center_lolah=center, dist=None,
+    points_lst = user_position_setup.get_many_victims_setup(amounts=point_amount, center_lolah=center, dist=None,
                                                             circle_radius=circle_radius)
     end_index = random.randint(0, len(points_lst) - 1)
     moved_locations = []
@@ -105,7 +105,7 @@ def __generate_random_waypoint_movement(center: (float, float, float), circle_ra
     # min_speed = average walking of human (3.6km/h), max_speed = speed of a car in a city (50 km/h)
     pause_time_max = duration * 0.05  # maximal wait 5% (3min in a 1h recording, average is 1.5 minutes)
     point_amount = 100
-    points_lst = User_Position_Setup.get_many_victims_setup(amounts=point_amount, center_lolah=center, dist=None,
+    points_lst = user_position_setup.get_many_victims_setup(amounts=point_amount, center_lolah=center, dist=None,
                                                             circle_radius=circle_radius)
     end_index = random.randint(0, len(points_lst) - 1)
     moved_locations = []
@@ -252,7 +252,7 @@ def __analyze_moving_victim(eve_distances: float, sniffing_duration: int, iterat
         dateTimeObj = datetime.now()
         time_str = f"{dateTimeObj.hour}:{dateTimeObj.minute}:{dateTimeObj.second}"
         print(f"Ms_VM: {time_str} i:{it_counter + 1}/{iterations}")
-        victim_loc, eves_locs = User_Position_Setup.get_large_scale_setup(eve_amounts=eve_amounts,
+        victim_loc, eves_locs = user_position_setup.get_large_scale_setup(eve_amounts=eve_amounts,
                                                                           inter_eve_dist=eve_distances,
                                                                           victim_loc=victim_type)
         # generate the movement of the victim around this initial victim_location
@@ -331,9 +331,9 @@ if __name__ == '__main__':
     durations_in = 3600  # 1h sniffing
     number_eves = 6
     noisy_prediction = True
-    point_estimator = True
     target_movement_radius = 2  # km
     target_movement_speed = 50000 / 3600  # m/sec
+    point_estimator = False
 
     __analyze_moving_victim(eve_distances=inter_obs_distance, sniffing_duration=durations_in, iterations=iterations_in,
                             eve_amounts=number_eves, area_output_folder=output_folder,

@@ -28,6 +28,10 @@ def __ITRS_2_LonLatHeight(x: float, y: float, z: float) -> (float, float, float)
 
 
 def __itrs_2_stereographic(center: (float, float, float), points: [(float, float, float)]) -> [(float, float)]:
+    if points is None:
+        return None
+    if len(points) == 0:
+        return None
     # https://en.wikipedia.org/wiki/Stereographic_map_projection
     center = np.array(center)
     points = np.array(points)
@@ -74,6 +78,10 @@ def __one_rotation_to_rule_them_all(angle: float, axis: (float, float, float)) -
 
 
 def __stereographic_2_itrs(center_itrs: (float, float, float), points: [(float, float)]) -> [(float, float, float)]:
+    if points is None:
+        return None
+    if len(points) == 0:
+        return None
     # center has to be in ITRS!
     ee_a = 6378.137  # semi-major axis of earth-ellipsoid in WSG84
     ee_b = 6356.752  # semi-minor axis of earth-ellipsoid in WSG84

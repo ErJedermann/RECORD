@@ -1,10 +1,10 @@
-numpy==1.21.4
-shapely==1.8.0
-astropy==4.2
-plotly==5.18.0
-sgp4==2.15
-pandas==1.1.5
-pyproj==3.0.0.post1
-skyfield==1.35
-matplotlib==3.5.0
+numpy>=1.21.4
+shapely>=1.8.0
+astropy>=4.2
+plotly>=5.18.0
+sgp4>=2.15
+pandas>=1.1.5
+pyproj>=3.0.0.post1
+skyfield>=1.35
+matplotlib>=3.5.0
 
