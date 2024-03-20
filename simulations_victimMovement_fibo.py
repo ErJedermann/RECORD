@@ -325,7 +325,7 @@ if __name__ == '__main__':
     # set the logging level for shapely (critical > error >  > warning = warn > info > debug > not_set)
     logging.getLogger('shapely.geos').setLevel(logging.WARNING)
     t1 = time.time()
-    output_folder = "simulation_data/victim_movement"
+    output_folder = "my_simulations/victim_movement"
     iterations_in = 100
     inter_obs_distance = 400  # fix this to 400 to focus on the effect of target movement
     durations_in = 3600  # 1h sniffing

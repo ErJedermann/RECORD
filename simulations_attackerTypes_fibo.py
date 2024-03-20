@@ -298,7 +298,7 @@ if __name__ == '__main__':
     # This is tailored towards long computations: starting multiple instances with slightly different parameters.
     # The output-files are later combined to one graph.
     t1 = time.time()
-    output_folder = "simulation_data2/duration_and_type"
+    output_folder = "my_simulations/duration_and_type"
     iterations_in = 10
     inter_obs_distance = [100]  # distances between the observers
     durations_in = [60]  # seconds;  durations_in = [1*60, 3*60, 10*60, 30*60, 60*60, 4*60*60]

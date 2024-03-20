@@ -8,8 +8,16 @@ region of interest (RoI) based on the events and evaluate the RoI), the generate
 the evaluation graphs.
 
 ## Installation
-For installing the dependencies run `pip install -r requirements.txt`. After this the python scripts `graph...py` and
-`simulations...py` can be executed.
+Pre-requirements: A working python installation with pip.
+
+For installing the dependencies run `pip install -r requirements.txt`. After this the python scripts `graph_*.py` and
+`simulations_*.py` can be executed.
+
+## Execute Simulations
+In the documents `simulation_setup_1.md` and `simulation_setup_2.md` are two step by step descriptions how to setup and 
+execute simulations. They create RECORD attack results from scratch and combine them into evaluation graphs, which will 
+be comparable to Figures 10 and 13 in the paper. However, variations in the values up to a factor of two are expected due 
+to the altered published beam model (see section **Published Beam Model** in this document).
 
 ## Simulation scripts
 The two scripts `simulations_attackerTypes_fibo.py` and `simulations_victimMovement_fibo.py` are responsible for
@@ -116,6 +124,10 @@ original model to avoid a simple tracking of Iridium devices in the real world, 
 - `graph_simulation_vs_realWorld.py`: Creates Figure 11 (chapter 5.2).
 
 ## Published Beam Model
+We did not publish the original satellite beam model to avoid a simple tracking of Iridium devices in the real world, 
+as mentioned in section 6.6 in the paper. We added some noise to the original beam model before publishing it. Thereby 
+we keep the general structure of the beams, while making it impractical for estimations in the real world.
+
 Comparison of the median RoI sizes [km²] of the paper vs the published beam model with attacker type 2
 (`inter_obs_distance`=100 km, `number_eves`=3, `noisy_prediction`=true, `weak_events`=true):
 
@@ -134,5 +146,5 @@ Comparison of the median RoI sizes [km²] of the paper vs the published beam mod
 This are the median RoIs of attacker type 2, evaluated by the script `graph_simulation_paper_vs_published.py`.
 They show that the resulting RoI produced by the published beam model can be compared to the original beam model in the
 paper. They are not precisely matching the original model, which is expected since we added some noise to the published 
-beam model. Still it is partially comparable as the results differ only up to a factor of 2.5 and the RoIs are decreasing 
-with increasing observation time.
+beam model. Still it is partially comparable as the results differ only up to a factor of 2.5 compared to the original model
+and the factors between the durations are also comparable.
